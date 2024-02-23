@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import StarRating from './starRating';
 import baseDataType from '@/statics/baseData';
+import { useGallery } from '@/api/galleryContext';
 
 interface DetailImageProps {
   images: baseDataType[]; // Array of images
@@ -14,6 +15,7 @@ const DetailImage: React.FC<DetailImageProps> = ({
   selectedImage,
   closeModal,
 }) => {
+  const { state } = useGallery();
   const [currentImageIndex, setCurrentImageIndex] = useState(
     images.findIndex((img) => img === selectedImage)
   );
@@ -103,7 +105,7 @@ const DetailImage: React.FC<DetailImageProps> = ({
         </p>
         <div className="flex items-center mt-2">
           <p className="text-md font-bold">Rate This Pic !!!</p>
-          <StarRating rating={images[currentImageIndex].rating} />
+          <StarRating data={state.data[currentImageIndex]} />
         </div>
       </div>
     </div>

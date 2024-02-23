@@ -3,12 +3,15 @@ import Image from 'next/image';
 import StarRating from './starRating';
 import DetailImage from './detailImage';
 import baseDataType from '@/statics/baseData';
+import { useGallery } from '@/api/galleryContext';
+
 interface GridGalleryProps {
   dataImages: baseDataType[];
 }
 
 const GridGallery: React.FC<GridGalleryProps> = ({ dataImages }) => {
   const [selectedImage, setSelectedImage] = useState<any>(null);
+  const { state } = useGallery();
 
   const openModal = (image: any) => {
     setSelectedImage(image);
@@ -32,7 +35,7 @@ const GridGallery: React.FC<GridGalleryProps> = ({ dataImages }) => {
                 <p className="text-md">{data.title}</p>
                 <div className="flex flex-col items-center">
                   <p className="text-md font-bold">Rate This Pic !!!</p>
-                  <StarRating rating={data.rating} />
+                  <StarRating data={state.data[index]} />
                 </div>
               </div>
               <Image

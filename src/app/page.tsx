@@ -6,8 +6,11 @@ import GridGallery from '@/components/gridGallery';
 import baseDataType from '@/statics/baseData';
 import SearchComponent from '@/components/autoSearch';
 import { fuzzySearch } from '@/libs/fuzzySearch';
+import { GalleryProvider } from '@/api/galleryContext';
+import { useGallery } from '@/api/galleryContext';
 
-export default function Home() {
+const HomePageWithoutProvider = () => {
+  const { state: globalGalleryState } = useGallery();
   const [value, setValue] = useLocalStorage<baseDataType[]>('base-data', []);
   const [filteredData, setFilteredData] = useState<baseDataType[]>([]);
 
@@ -18,7 +21,7 @@ export default function Home() {
         prevState === null ||
         prevState === undefined
       ) {
-        return BASE_DATA;
+        return globalGalleryState.data;
       } else {
         return prevState;
       }
@@ -26,8 +29,9 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    setFilteredData(value);
-  }, [value]);
+    console.log('invoke at the top');
+    setValue(globalGalleryState.data);
+  }, [globalGalleryState]);
 
   type HandlerSearchType = (data: string) => void;
 
@@ -41,7 +45,19 @@ export default function Home() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-between">
       <SearchComponent handlerSearch={handlerSearch} />
-      <GridGallery dataImages={filteredData} />
+      <GridGallery
+        dataImages={filteredData}
+      />
     </div>
+  );
+};
+
+export default function Home() {
+  return (
+    <>
+      <GalleryProvider>
+        <HomePageWithoutProvider />
+      </GalleryProvider>
+    </>
   );
 }

@@ -1,6 +1,6 @@
 import baseDataType from "./baseData"
 
-const BASE_DATA: baseDataType[] = [
+let BASE_DATA: baseDataType[] = [
     {
         "title": "Facere blanditiis ducimus facere.",
         "image_url": "https://via.placeholder.com/640x480.png/005544?text=Animal+qui",
