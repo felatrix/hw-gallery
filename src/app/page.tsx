@@ -1,10 +1,11 @@
-"use client"
+'use client';
 import React, { useEffect, useState } from 'react';
 import { useLocalStorage } from 'usehooks-ts';
 import BASE_DATA from '@/statics/BASE_DATA';
 import GridGallery from '@/components/gridGallery';
-import AutocompleteSearch from '@/components/autoCompleteSearch';
 import baseDataType from '@/statics/baseData';
+import SearchComponent from '@/components/autoSearch';
+import { fuzzySearch } from '@/libs/fuzzySearch';
 
 export default function Home() {
   const [value, setValue] = useLocalStorage<baseDataType[]>('base-data', []);
@@ -28,19 +29,18 @@ export default function Home() {
     setFilteredData(value);
   }, [value]);
 
-  const handleSearch = (searchTerm: string) => {
-    const filteredData = BASE_DATA.filter((item) =>
-      item.title.toLowerCase().includes(searchTerm.toLowerCase())
+  type HandlerSearchType = (data: string) => void;
+
+  const handlerSearch: HandlerSearchType = (data) => {
+    const filteredSuggestions = BASE_DATA.filter((item) =>
+      fuzzySearch(data, item.title)
     );
-    setFilteredData(filteredData);
+    setFilteredData(filteredSuggestions);
   };
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-between">
-      {/* <AutocompleteSearch
-        options={BASE_DATA.map((item) => item.title)}
-        onSelect={handleSearch}
-      /> */}
+      <SearchComponent handlerSearch={handlerSearch} />
       <GridGallery dataImages={filteredData} />
     </div>
   );
