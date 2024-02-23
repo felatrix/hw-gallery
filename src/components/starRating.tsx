@@ -3,13 +3,12 @@ import { useLocalStorage } from 'usehooks-ts';
 import baseDataType from '@/statics/baseData';
 import BASE_DATA from '@/statics/BASE_DATA';
 import { useGallery } from '@/api/galleryContext';
+import Tooltip from './tooltip';
 interface StarRatingProps {
   data: baseDataType;
 }
 
-const StarRating: React.FC<StarRatingProps> = ({
-  data,
-}) => {
+const StarRating: React.FC<StarRatingProps> = ({ data }) => {
   const rating = data.rating;
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [value, setValue] = useLocalStorage<baseDataType[]>('base-data', []);
@@ -19,9 +18,9 @@ const StarRating: React.FC<StarRatingProps> = ({
     const index = value.findIndex((obj) => obj.title == data.title);
     const newValueObj = { ...value[index], rating: star + 1 };
     changeRating({
-      image:newValueObj,
-      index:index
-    })
+      image: newValueObj,
+      index: index,
+    });
   };
   return (
     <div>
@@ -34,15 +33,17 @@ const StarRating: React.FC<StarRatingProps> = ({
 
         return (
           <>
-            <span
-              key={index}
-              onClick={() => handlerPickRating(index)}
-              className={`text-2xl cursor-pointer ${isFilled ? 'hover:grayscale-0' : 'grayscale'}`}
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
-            >
-              {String.fromCodePoint(iconCode)}
-            </span>
+            <Tooltip text={`give ${index + 1} star`}>
+              <span
+                key={index}
+                onClick={() => handlerPickRating(index)}
+                className={`text-2xl cursor-pointer ${isFilled ? 'hover:grayscale-0' : 'grayscale'} text-nowrap`}
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
+              >
+                {String.fromCodePoint(iconCode)}
+              </span>
+            </Tooltip>
           </>
         );
       })}
