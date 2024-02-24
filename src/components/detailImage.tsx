@@ -97,7 +97,7 @@ const DetailImage: React.FC<DetailImageProps> = ({
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
-                className="w-full h-full absolute bg-[#ffffff9c] top-0 r-0 transition p-5 
+                className="w-full h-full absolute bg-[#ffffff27] top-0 r-0 transition p-5 
               flex flex-col justify-between items-center"
               >
                 <p className="text-lg font-bold">
