@@ -1,4 +1,3 @@
-
 This is a [Next.js](https://nextjs.org/) project, you can see live demo on [https://hw-gallery.vercel.app/](https://hw-gallery.vercel.app/)
 ## Getting Started
 
