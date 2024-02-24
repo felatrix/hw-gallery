@@ -3,12 +3,8 @@ This is a [Next.js](https://nextjs.org/) project, you can see live demo on [http
 
 First, run the development server:
 
-```bash
-yarn run install
-```bash
-yarn run dev
-
-# or
+    yarn install
+    yarn run dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## About Application
